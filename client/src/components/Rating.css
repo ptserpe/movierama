@@ -1,0 +1,29 @@
+.ratingRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;   
+    gap: 5px;
+    justify-content: space-between;
+}
+
+.ratingEnabled {
+    cursor:pointer;
+    color:blue;
+    text-decoration:underline;
+}
+
+.likeHateButtons {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.unlikeUnhateButtons {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,28 @@
+.homePage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.PageHeader {
+    color: white;
+    background: dodgerblue;
+    padding: 5px 10px 5px 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.PageHeader > h1 {
+    flex-grow: 0;
+}
+
+.userButtons {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}

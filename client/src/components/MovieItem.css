@@ -1,0 +1,19 @@
+.movieItem {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    margin: 16px;
+    padding: 10px;
+    gap: 10px;
+}
+
+.movieTitle {
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+.movieLikeRow > p {
+    margin: 0;
+    padding: 0;
+}
+

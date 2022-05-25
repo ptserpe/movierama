@@ -1,0 +1,24 @@
+.movieList {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.movieActions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 5px;
+    margin: 5px 16px;
+}
+
+.addMovie {
+    flex-grow: 1;
+}
+
+.sortControls {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 5px;
+}
