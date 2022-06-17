@@ -1,0 +1,48 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-init
+
+spec:
+  template:
+    spec:
+      initContainers:
+      - name: db-init-deploy
+        image: "ghcr.io/groundnuty/k8s-wait-for:v1.6"
+        args: [ "pod", "-lapp=postgres" ]
+      containers:
+      - name: db-init
+        imagePullPolicy: IfNotPresent
+        image: localhost:32000/movierama/app
+        command: [ "npm" ]
+        args: [ "run", "db_init" ]
+        ports:
+        - containerPort: 8080
+          name: db-init
+        env:
+        - name: SERVER_PORT
+          value: "8080"
+        - name: DB_HOST
+          value: "tb-database"
+        - name: DB_PASSWORD
+          value: "postgres"
+        - name: DB_USERNAME
+          value: "postgres"
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_DATABASE
+          value: "postgres"
+        - name: DB_MOCK_DATA
+          value: "true"
+        - name: REDIS_HOST
+          value: "tb-redis"
+        - name: REDIS_PORT
+          value: "6379"
+        - name: REDIS_DATABASE
+          value: "0"
+        - name: JWT_SIGNER
+          value: "test@test.com"
+        - name: JWT_SECRET
+          value: "dGVzdHRlc3R0ZXN0dGVzdAo="
+      restartPolicy: Never
+  backoffLimit: 4

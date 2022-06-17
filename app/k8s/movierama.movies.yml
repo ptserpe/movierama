@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movies
+  labels:
+    app: movies
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxUnavailable: "50%"
+  selector:
+    matchLabels:
+      app: movies
+  template:
+    metadata:
+      labels:
+        app: movies
+    spec:
+      initContainers:
+      - name: movies-deploy
+        image: "ghcr.io/groundnuty/k8s-wait-for:v1.6"
+        args: [ "job", "db-init" ]
+      containers:
+      - name: movies
+        imagePullPolicy: IfNotPresent
+        image: localhost:32000/movierama/app
+        command: [ "npm" ]
+        args: [ "run", "movies" ]
+        ports:
+        - containerPort: 8080
+          name: movies
+        env:
+        - name: SERVER_PORT
+          value: "8080"
+        - name: DB_HOST
+          value: "tb-database"
+        - name: DB_PASSWORD
+          value: "postgres"
+        - name: DB_USERNAME
+          value: "postgres"
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_DATABASE
+          value: "postgres"
+        - name: DB_MOCK_DATA
+          value: "true"
+        - name: REDIS_HOST
+          value: "tb-redis"
+        - name: REDIS_PORT
+          value: "6379"
+        - name: REDIS_DATABASE
+          value: "0"
+        - name: JWT_SIGNER
+          value: "test@test.com"
+        - name: JWT_SECRET
+          value: "dGVzdHRlc3R0ZXN0dGVzdAo="
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: movies
+spec:
+  type: ClusterIP
+  selector:
+    app: movies
+  ports:
+  - port: 8080
+    name: movies
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: movies
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /api/v1/movies/*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: movies
+                port:
+                  number: 8080

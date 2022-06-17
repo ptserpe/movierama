@@ -1,0 +1,35 @@
+apiVersion: skaffold/v2beta28
+kind: Config
+metadata:
+  name: movierama
+build:
+  artifacts:
+    - image: localhost:32000/movierama/app
+      context: ./app
+      docker:
+        dockerfile: ./docker/Dockerfile
+        cacheFrom:
+          - localhost:32000/movierama/app
+    - image: localhost:32000/movierama/ui
+      context: ./client
+      docker:
+        dockerfile: ./docker/Dockerfile
+        cacheFrom:
+          - localhost:32000/movierama/ui
+  local:
+    concurrency: 1
+    tryImportMissing: false
+    useDockerCLI: false
+    useBuildkit: false
+    push: true
+deploy:
+  kubeContext: microk8s
+  kubectl:
+    manifests:
+      - "third-party/k8s/*"
+      - "app/k8s/*"
+      - "client/k8s/*"
+  
+
+
+      
