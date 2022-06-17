@@ -13,7 +13,7 @@ spec:
       containers:
       - name: db-init
         imagePullPolicy: IfNotPresent
-        image: localhost:32000/movierama/app
+        image: movierama/app
         command: [ "npm" ]
         args: [ "run", "db_init" ]
         ports:

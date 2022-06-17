@@ -24,7 +24,7 @@ spec:
       containers:
       - name: auth
         imagePullPolicy: IfNotPresent
-        image: localhost:32000/movierama/app
+        image: movierama/app
         ports:
         - containerPort: 8080
           name: auth

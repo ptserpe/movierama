@@ -24,7 +24,7 @@ spec:
       containers:
       - name: movies
         imagePullPolicy: IfNotPresent
-        image: localhost:32000/movierama/app
+        image: movierama/app
         command: [ "npm" ]
         args: [ "run", "movies" ]
         ports:

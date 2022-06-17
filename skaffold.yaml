@@ -4,18 +4,18 @@ metadata:
   name: movierama
 build:
   artifacts:
-    - image: localhost:32000/movierama/app
+    - image: movierama/app
       context: ./app
       docker:
         dockerfile: ./docker/Dockerfile
         cacheFrom:
-          - localhost:32000/movierama/app
-    - image: localhost:32000/movierama/ui
+          - movierama/app
+    - image: movierama/ui
       context: ./client
       docker:
         dockerfile: ./docker/Dockerfile
         cacheFrom:
-          - localhost:32000/movierama/ui
+          - movierama/ui
   local:
     concurrency: 1
     tryImportMissing: false

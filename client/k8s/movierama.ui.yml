@@ -20,7 +20,7 @@ spec:
       containers:
       - name: ui
         imagePullPolicy: IfNotPresent
-        image: localhost:32000/movierama/ui
+        image: movierama/ui
         ports:
         - containerPort: 80
           name: ui
