@@ -37,7 +37,7 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 // Add API router
-app.use('/api/v1/ratings', require('../../routes/ratings.js'))
+app.use('/api/v1/rating', require('../../routes/ratings.js'))
 
 // Add error handling middleware last
 app.use(errors())
