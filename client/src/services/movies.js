@@ -6,6 +6,10 @@ class MoviesService {
     return axios.get('/api/v1/movies', { headers: authHeader(), params: {sort: sort} })
   }
 
+  deleteMovie(movieID) {
+    return axios.delete(`/api/v1/movies/${movieID}`, { headers: authHeader() })
+  }
+
   getMoviesSubmittedBy(submitter, sort = '') {
     return axios.get(`/api/v1/movies/${submitter}`, { headers: authHeader(), params: {sort: sort} })
   }

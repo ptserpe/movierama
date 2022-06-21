@@ -3,6 +3,8 @@ import { MovieList } from "../components/MovieList"
 import { logout } from '../features/auth/auth.js'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import { Link, useLocation, useParams, useNavigate } from "react-router-dom"
+import AuthService from '../services/auth.js'
+
 
 export default function Home() {
     const navigate = useNavigate()
@@ -39,7 +41,15 @@ export default function Home() {
                                     <Link to={username}>{username}</Link>
                                     <span> </span>
                                 </div>
-                                <button aria-label='Login' onClick={() => dispatch(logout())}>Logout</button>
+                                <button aria-label='Logout' onClick={ async () => {
+                                    try {
+                                        await AuthService.logout()
+                                    } catch {
+
+                                    } finally {
+                                        dispatch(logout())
+                                    }
+                                }}>Logout</button>
                             </div>
                             :
                             <div className='userButtons'>

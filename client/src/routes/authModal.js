@@ -52,8 +52,8 @@ export default function AuthModal() {
                   setErrorMsg('Please fill your credentials')
                   return
                 }
-                const token = await AuthService.login(username, password)
-                dispath(loggedIn({ token: token, username: username }))
+                const data = await AuthService.login(username, password)
+                dispath(loggedIn({ token: data.jwt, username: username, is_admin: data.is_admin }))
                 navigate(-1)
               } catch (err) {
                 setPassword('')
@@ -74,8 +74,8 @@ export default function AuthModal() {
                   setErrorMsg('Please fill your credentials')
                   return
                 }
-                const token = await AuthService.register(username, password)    
-                dispath(loggedIn({ token: token, username: username }))
+                const data = await AuthService.register(username, password)  
+                dispath(loggedIn({ token: data.jwt, username: username, is_admin: data.is_admin }))
                 navigate(-1)
               } catch (err) {
                 setErrorMsg(err.message)
