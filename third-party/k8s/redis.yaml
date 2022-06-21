@@ -24,7 +24,7 @@ spec:
         app: tb-redis
     spec:
       containers:
-      - image: redis:4.0
+      - image: redis:7.0.2-alpine
         imagePullPolicy: IfNotPresent
         livenessProbe:
           periodSeconds: 5
