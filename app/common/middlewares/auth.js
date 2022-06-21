@@ -24,6 +24,7 @@ async function getToken (req, res, next) {
       if (cachedToken) {
         jwtRedis.refreshToken(encodedToken)
         req.token = decodedToken
+        req.token.encoded = encodedToken
       }
     } catch (err) {
       logger.log('debug', err.message)

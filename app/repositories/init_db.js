@@ -10,7 +10,8 @@ const init = async () => {
                 constraint users_pk
                     primary key,
             username text not null,
-            password text not null
+            password text not null,
+            role     text not null
         );
         
         create unique index if not exists users_id_uindex
@@ -46,10 +47,12 @@ const init = async () => {
                     primary key,
             movie_id int not null
                 constraint ratings_movies_id_fk
-                    references movies,
+                    references movies
+                        on update cascade on delete cascade,
             user_id  int not null
                 constraint ratings_users_id_fk
-                    references users,
+                    references users
+                        on update cascade on delete cascade,
             liked    bool
         );
         
@@ -58,16 +61,18 @@ const init = async () => {
 
         create unique index if not exists ratings_movie_id_user_id_uindex
             on ratings (movie_id, user_id);
+        
+        insert into public.users (id, username, password, role) values (1, 'admin', '$2b$05$wbUjCDWKkflAjBFGWxSkGOUUQfflBPRB9orC.yLiwviECQRs1IFAi', 'admin');
         `
   )
 
   if (config.db.mock_data) {
     try {
       await db.execute(`
-            INSERT INTO public.users (id, username, password) VALUES (150, 'test1', '$2b$05$qifYdE2nPDcpB3MkR/ov.O3CWSjqNfCVuxv1Y1VaPRUNLgsutVcyG');
-            INSERT INTO public.users (id, username, password) VALUES (151, 'test2', '$2b$05$yoo2zSBFu3ABizOOgwHrRuqZ2sj7LL8l.d2M6yJ1HvA5x9rGZyrQ.');
-            INSERT INTO public.users (id, username, password) VALUES (152, 'test3', '$2b$05$jHqxixHEFlg8j2YIf7Nc0.PQcbSIDQxa/FRzS3n9Imorea1TXh7jK');
-            INSERT INTO public.users (id, username, password) VALUES (153, 'test4', '$2b$05$TMYSN.mcjPkfygh/m3juOu6qjV2H8f3M3oTY5iXxuuOOg/xXf1KUy');  
+            INSERT INTO public.users (id, username, password, role) VALUES (150, 'test1', '$2b$05$qifYdE2nPDcpB3MkR/ov.O3CWSjqNfCVuxv1Y1VaPRUNLgsutVcyG', 'normal');
+            INSERT INTO public.users (id, username, password, role) VALUES (151, 'test2', '$2b$05$yoo2zSBFu3ABizOOgwHrRuqZ2sj7LL8l.d2M6yJ1HvA5x9rGZyrQ.', 'normal');
+            INSERT INTO public.users (id, username, password, role) VALUES (152, 'test3', '$2b$05$jHqxixHEFlg8j2YIf7Nc0.PQcbSIDQxa/FRzS3n9Imorea1TXh7jK', 'normal');
+            INSERT INTO public.users (id, username, password, role) VALUES (153, 'test4', '$2b$05$TMYSN.mcjPkfygh/m3juOu6qjV2H8f3M3oTY5iXxuuOOg/xXf1KUy', 'normal');  
             
             INSERT INTO public.movies (id, user_id, title, description, submitter, created_at) VALUES (17, 153, 'Doctor Strange in the Multiverse of Madness', 'Doctor Strange teams up with a mysterious teenage girl from his dreams who can travel across multiverses, to battle multiple threats, including other-universe versions of himself, which threaten to wipe out millions across the multiverse. They seek help from Wanda the Scarlet Witch, Wong and others.', 'test4', '2022-05-24 21:10:13.642000 +00:00');
 

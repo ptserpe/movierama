@@ -20,6 +20,11 @@ async function getAllMovies (userID = null, sort = '') {
   return await db.execute(query)
 }
 
+async function deleteMovie (movieID) {
+  const query = `delete from movies where id='${movieID}'`
+  return await db.execute(query)
+}
+
 async function getMoviesSubmittedBy (submitter, userID = null, sort = '') {
   switch (sort) {
     case 'likes':
@@ -54,5 +59,6 @@ async function saveMovie (userID, title, description, submitter) {
 module.exports = {
   getAllMovies,
   getMoviesSubmittedBy,
-  saveMovie
+  saveMovie,
+  deleteMovie
 }

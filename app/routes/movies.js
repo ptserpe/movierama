@@ -38,12 +38,19 @@ router.get('/:submitter/', async function (req, res, next) {
   }
 })
 
-// router.delete('/:id/', admin.requireAdmin(), async function (req, res, next) {
-//   const submitter = req.params.id
+router.delete('/:id', admin.requireAdmin(), async function (req, res, next) {
+  const movieID = req.params.id
 
-//   logger.log('info', `Deleting movie ${submitter} ..`)
-//   res.status(200).end()
-// })
+  logger.log('info', `Deleting movie ${movieID} ..`)
+
+  try {
+    await moviesDB.deleteMovie(movieID)
+  } catch (err) {
+    next(err)
+  }
+
+  res.status(200).end()
+})
 
 router.post('/new', validator.insertMovie(), async function (req, res, next) {
   if (!req.token) {
