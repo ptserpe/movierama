@@ -15,5 +15,5 @@ db.init().then( () => {
   process.exit(0);
 }).catch((err) => {
   logger.log('error', err.message)
-  process.exit(1);
+  process.exit(0);
 })
