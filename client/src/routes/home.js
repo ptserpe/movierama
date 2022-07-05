@@ -17,7 +17,7 @@ export default function Home() {
     return (
         <div className="homePage">
             <div className='PageHeader'>
-                <h1>MovieRama
+                <h1>MovieShare
                     {params.userfilter &&
                         <span> - Movies submitted by {
                             params.userfilter === username ?
